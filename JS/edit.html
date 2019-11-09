@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf8">
+    <title>Chedith</title>
+  </head>
+  <body>
+    <input type="text" id="champ" />
+    <input type="date" id="date" />
+    <button onclick="edit()">Edit</button>
+    <script>
+      var id = location.hash.substr(1)
+      var data = JSON.parse(sessionStorage.getItem("liste"))
+
+      champ.value = data[id][0]
+      date.value = data[id][1]
+
+      function edit(){
+        data[id][0] = champ.value
+        data[id][1] = date.value
+        sessionStorage.setItem("liste", JSON.stringify(data))
+        location.href = 'addList.html'
+      }
+    </script>
+  </body>
+</html>

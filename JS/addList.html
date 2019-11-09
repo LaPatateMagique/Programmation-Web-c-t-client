@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf8">
+    <title>Cheh</title>
+  </head>
+  <body>
+    <input type="text" id="champ" />
+    <input type="date" id="date" />
+    <button onclick="addList()">Add</button>
+    <button onclick="clearList()">Clear</button>
+    <ul id="liste"></ul>
+    <script>
+      let liste = document.getElementById("liste");
+      let champ = document.getElementById("champ");
+      let date = document.getElementById("date");
+      champ.onkeyup = function (e) { if (e.which == 13) date.focus() }
+      date.onkeyup = function (e) { if (e.which == 13) addList() }
+      var save = sessionStorage.getItem("liste");
+      save = save == null || save == "" ? [] : JSON.parse(save);
+      for (elem in save) {
+        liste.insertAdjacentHTML("beforeend", "<li>" + save[elem][0] + " " + save[elem][1] + "</li>" + "<input type='button' onclick=\"location.href='edit.html#" + elem + "';\" value='Edit' />");
+      };
+
+      function addList() {
+        liste.insertAdjacentHTML("beforeend", "<li>" + champ.value + " " + date.value + "</li>" + "<input type='button' onclick=\"location.href='edit.html#" + save.length + "';\" value='Edit' />");
+        save.push([champ.value, date.value]);
+        sessionStorage.setItem("liste", JSON.stringify(save));
+        champ.focus();
+      };
+
+      function clearList() {
+        sessionStorage.setItem("liste", "");
+        save = [];
+        liste.textContent = "";
+        champ.focus();
+      };
+    </script>
+  </body>
+</html>
